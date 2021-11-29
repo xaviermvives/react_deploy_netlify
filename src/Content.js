@@ -1,39 +1,13 @@
-import React, {useState} from 'react'
-import { FaTrashAlt} from 'react-icons/fa'
+import React from 'react'
+import ItemList from './ItemList'
  
-const Content = () => {
-    const [items, setItems] = useState([
-        {
-            id: 1,
-            checked: true,
-            item: "One half pound bag of Cocoa Covered Almonds Unsalted"
-        },
-        {
-            id: 2,
-            checked: false,
-            item: "Item 2"
-        },
-        {
-            id: 3,
-            checked: false,
-            item: "Item 3"
-        }
-    ])
-
-    const handleCheck = (id) => {
-        const listItems = items.map(item => 
-            item.id === id ? {...item, checked: !item.checked} : item
-        )
-        setItems(listItems)
-        localStorage.setItem('shoppinglist', JSON.stringify(listItems))
+const Content = ({items, deleteItem, checkItem}) => {
+    const handleCheck = id => {
+        checkItem(id)
     }
 
-    const handleDelete = (id) => {
-        console.log(id);
-        const newList = items.filter(item => item.id !== id)
-        setItems(newList)
-
-
+    const handleDelete = id => {
+        deleteItem(id)
     }
 
     
@@ -41,22 +15,11 @@ const Content = () => {
         <main>
             {
                 items.length ? (
-                    <ul>
-                    {
-                        items.map(item => (
-                            <li className="item" key={item.id}>
-                                <input type="checkbox" checked={item.checked} onChange={() => handleCheck(item.id)} />
-                                <label style={item.checked ? {textDecoration:'line-through'} : null}onDoubleClick={() => handleCheck(item.id)}>{item.item}</label>
-                                <FaTrashAlt onClick={() => handleDelete(item.id)}role="button" tabIndex="0" />
-                            </li>
-                        ))
-                    }
-                </ul>
+                   <ItemList items={items} handleCheck={handleCheck} handleDelete={handleDelete} /> 
                 ) : (
                     <p style={{marginTop:"2rem"}}>Your list is empty</p>
                 )
             }
-           
         </main>
     )
 }
