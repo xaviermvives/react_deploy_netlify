@@ -6,13 +6,14 @@ import Header from "./Header";
 import SearchItem from "./SearchItem";
 
 function App() {
-  const [items, setItems] = useState([]);
+  const [items, setItems] = useState(
+    JSON.parse(localStorage.getItem("shoppinglist")) || []
+  );
   const [newItem, setNewItem] = useState("");
   const [search, setSearch] = useState("");
 
-  useEffect(() => {
-    setItems(JSON.parse(localStorage.getItem("shoppinglist")));
-  }, []);
+  // useEffect(() => {
+  // }, []);
 
   const setAndSaveItems = (newItems) => {
     setItems(newItems);
@@ -20,13 +21,14 @@ function App() {
   };
 
   const addItem = (item) => {
-    const id = items?.length ? items[items.length - 1].id + 1 : 1;
+    const id = items.length ? items[items.length - 1].id + 1 : 1;
     const myNewItem = {
       id,
       checked: false,
       item,
     };
-    const listItems = items?.length ? [...items, myNewItem] : [myNewItem];
+    // const listItems = items?.length ? [...items, myNewItem] : [myNewItem];
+    const listItems = [...items, myNewItem];
     setAndSaveItems(listItems);
   };
 
@@ -63,13 +65,13 @@ function App() {
       />
       <SearchItem search={search} setSearch={setSearch} />
       <Content
-        items={items?.filter((item) =>
+        items={items.filter((item) =>
           item.item.toLowerCase().includes(search.toLowerCase())
         )}
         checkItem={handleCheck}
         deleteItem={handleDelete}
       />
-      <Footer length={items?.length} />
+      <Footer length={items.length} />
     </div>
   );
 }
