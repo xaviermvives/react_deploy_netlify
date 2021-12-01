@@ -1,27 +1,28 @@
-import React from 'react'
-import ItemList from './ItemList'
- 
-const Content = ({items, deleteItem, checkItem}) => {
-    const handleCheck = id => {
-        checkItem(id)
-    }
+import React from "react";
+import ItemList from "./ItemList";
 
-    const handleDelete = id => {
-        deleteItem(id)
-    }
+const Content = ({ items, deleteItem, checkItem }) => {
+  const handleCheck = (id) => {
+    checkItem(id);
+  };
 
-    
-    return (
-        <main>
-            {
-                items.length ? (
-                   <ItemList items={items} handleCheck={handleCheck} handleDelete={handleDelete} /> 
-                ) : (
-                    <p style={{marginTop:"2rem"}}>Your list is empty</p>
-                )
-            }
-        </main>
-    )
-}
+  const handleDelete = (id) => {
+    deleteItem(id);
+  };
 
-export default Content
+  return (
+    <main>
+      {items?.length ? (
+        <ItemList
+          items={items}
+          handleCheck={handleCheck}
+          handleDelete={handleDelete}
+        />
+      ) : (
+        <p style={{ marginTop: "2rem" }}>Your list is empty</p>
+      )}
+    </main>
+  );
+};
+
+export default Content;
